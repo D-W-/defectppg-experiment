@@ -8,7 +8,7 @@ Created by Han Wang at 2/11/18.
 from bs4 import BeautifulSoup
 import os
 
-__author__ = 'Han W#ang'
+__author__ = 'Han Wang'
 
 INPUT = 'index.html'
 OUTPUT = 'defects.list'
