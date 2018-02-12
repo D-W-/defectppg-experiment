@@ -30,7 +30,7 @@ class OutputParser:
 		soup = BeautifulSoup(self.content, 'html.parser')
 		table = soup.findAll('tbody')[0]
 		data = [map(toText, tr.findAll('td')) for tr in table.findAll('tr')]
-		data = ["::".join(line[0:4]) + '\n' for line in data]
+		data = ["::".join(line[0:5]) + '\n' for line in data]
 		# store parsed table data into file
 		with open(os.path.join(self.location, OUTPUT), 'w') as f:
 			f.writelines(data)
