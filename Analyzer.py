@@ -29,6 +29,7 @@ class Analyzer(object):
 	def analyse(self):
 		for tar in self.projects:
 			call("cd " + tar + " && ./config no-asm", shell=True)
+			# TO-FIX: -o option not working
 			call("cd " + tar + " && " + ANALYZER + " make -o output" , shell=True)
 		print("analyze phase done.")
 
