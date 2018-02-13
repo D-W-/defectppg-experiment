@@ -24,19 +24,19 @@ class Analyzer(object):
 
 	def unzip(self):
 		for tar in self.tars:
-			call("cd " + self.location + " tar -zxvf " + tar, shell=True)
+			call("cd " + self.location + " && tar -zxvf " + tar, shell=True)
 
 	def analyse(self):
 		for tar in self.projects:
 			call("cd " + tar + " && ./config no-asm", shell=True)
-			call("cd " + tar + " && " + ANALYZER + tar + " make -o output" , shell=True)
+			call("cd " + tar + " && " + ANALYZER + " make -o output" , shell=True)
 		print("analyze phase done.")
 
 
 def main():
 	a = Analyzer(LOCATION)
-	a.unzip()
-	# a.analyse()
+	# a.unzip()
+	a.analyse()
 
 
 if __name__ == '__main__':
