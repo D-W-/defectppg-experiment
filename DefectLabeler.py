@@ -19,8 +19,10 @@ class Defect:
 		self.line = line
 		self.fixed = True
 
+	@property
 	def __str__(self):
-		return "::".join((self.location, self.method, self.line, str(self.fixed))) + "\n"
+		return "{0}\n".format(
+			"::".join((self.location, self.method, self.line, str(self.fixed))))
 
 	def unfix(self):
 		self.fixed = False
@@ -65,12 +67,13 @@ class DefectLabeler:
 		with open(out_location, "w") as f:
 			f.writelines([str(defect) for defect in prev_defects])
 
+
 def main():
 	labeler = DefectLabeler()
 	labeler.label("output/defects1.list", "output/defects2.list", "output/out.list")
-	d = Defect("1","2","3","4","5")
+	d = Defect("1", "2", "3", "4", "5")
 	print(str(d))
 
 
 if __name__ == "__main__":
-    main()
+	main()
