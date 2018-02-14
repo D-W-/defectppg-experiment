@@ -8,6 +8,8 @@ Created by Han Wang at 2/12/18.
 __author__ = 'Han Wang'
 
 # import OutputParser
+from subprocess import check_output
+from os.path import join
 
 
 class Defect:
@@ -19,7 +21,6 @@ class Defect:
 		self.line = line
 		self.fixed = True
 
-	@property
 	def __str__(self):
 		return "{0}\n".format(
 			"::".join((self.location, self.method, self.line, str(self.fixed))))
@@ -69,11 +70,14 @@ class DefectLabeler:
 
 
 def main():
+	loc = "output"
+	d = "defects.list"
+	out_folders = check_output("ls " + loc + " | grep \"scan\"", shell=True)
+	out_folders = [join(loc, folder) for folder in out_folders.strip().split("\n")]
 	labeler = DefectLabeler()
-	labeler.label("output/defects1.list", "output/defects2.list", "output/out.list")
-	d = Defect("1", "2", "3", "4", "5")
-	print(str(d))
-
+	for p, c in zip(out_folders[:-1], out_folders[1:]):
+		print(p, c)
+		labeler.label(join(p, d), join(c, d), join(p, "out.list"))
 
 if __name__ == "__main__":
 	main()
