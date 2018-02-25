@@ -8,6 +8,7 @@ Created by Han Wang at 2/11/18.
 
 from bs4 import BeautifulSoup
 import os
+import Analyzer
 from subprocess import check_output
 
 __author__ = 'Han Wang'
@@ -18,6 +19,7 @@ OUTPUT = 'defects.list'
 
 def toText(item):
     return item.text
+
 
 class OutputParser:
     def __init__(self):
@@ -35,9 +37,10 @@ class OutputParser:
         with open(os.path.join(location, OUTPUT), 'w') as f:
             f.writelines(data)
 
+
 def main():
-    location = "output"
-    out_folders = check_output("ls " + location + " | grep \"scan\"", shell=True)
+    location = Analyzer.LOCATION
+    out_folders = check_output("cd " + location + "&& ls -d */output/*/", shell=True)
     out_folders = out_folders.strip().split("\n")
 
     parser = OutputParser()

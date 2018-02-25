@@ -10,7 +10,7 @@ __author__ = 'Han Wang'
 
 from subprocess import check_output
 from os.path import join
-
+import Analyzer
 
 class Defect:
     def __init__(self, group, tpe, location, method, line):
@@ -70,14 +70,16 @@ class DefectLabeler:
 
 
 def main():
-    loc = "output"
+    location = Analyzer.LOCATION
     d = "defects.list"
-    out_folders = check_output("ls " + loc + " | grep \"scan\"", shell=True)
-    out_folders = [join(loc, folder) for folder in out_folders.strip().split("\n")]
+    # out_folders = check_output("ls " + loc + " | grep \"scan\"", shell=True)
+    out_folders = check_output("cd " + location + "&& ls -d */output/*/", shell=True)
+    out_folders = [join(location, folder) for folder in out_folders.strip().split("\n")]
     labeler = DefectLabeler()
     for p, c in zip(out_folders[:-1], out_folders[1:]):
         print(p, c)
         labeler.label(join(p, d), join(c, d), join(p, "out.list"))
+
 
 if __name__ == "__main__":
     main()
