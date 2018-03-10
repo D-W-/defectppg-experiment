@@ -68,8 +68,8 @@ class DefectLabeler:
                 defect.unfix()
 
         # defect to absolute path
-        for defect in prev_defects :
-            defect.location = join(defect_location, defect.location)
+        # for defect in prev_defects :
+        #     defect.location = join(defect_location, defect.location)
 
         with open(out_location, "w") as f:
             f.writelines([str(defect) for defect in prev_defects])
@@ -84,11 +84,10 @@ def main():
     out_folders = check_output("cd " + location + "&& ls -d */output/*/", shell=True)
     out_folders = [join(location, folder) for folder in out_folders.strip().split("\n")]
     labeler = DefectLabeler()
-    for p, c, fd in zip(out_folders[:-1], out_folders[1:], projects_folders):
-        print(p, c, fd)
-        labeler.label(join(p, d), join(c, d), join(p, "out.list"), fd)
+    for p, fd in zip(out_folders, projects_folders):
+        # print(p, c, fd)
+        labeler.label(join(p, d), join(out_folders[-1], d), join(p, "out.list"), fd)
 
-        break
 
 
 # def test():
