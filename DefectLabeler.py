@@ -68,8 +68,8 @@ class DefectLabeler:
                 defect.unfix()
 
         # defect to absolute path
-        # for defect in prev_defects :
-        #     defect.location = join(defect_location, defect.location)
+        for defect in prev_defects:
+            defect.location = join(defect_location, defect.location)
 
         with open(out_location, "w") as f:
             f.writelines([str(defect) for defect in prev_defects])
